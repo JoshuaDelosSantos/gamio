@@ -26,7 +26,7 @@ def main():
         elif choice == "S":
             high = set_limit(low)
         elif choice == "H":
-            high_scores()
+            display_high_scores()
         else:
             print("Invalid choice")
         print(MENU)
@@ -44,6 +44,7 @@ def play(low, high):
     """Play guessing game using current low and high values."""
     secret = random.randint(low, high)
     number_of_guesses = 1
+
     guess = get_valid_number(f"Guess a number between {low} and {high}: ")
     while guess != secret:
         number_of_guesses += 1
@@ -53,8 +54,10 @@ def play(low, high):
             print("Lower")
         guess = get_valid_number(f"Guess a number between {low} and {high}: ")
     print(f"You got it in {number_of_guesses} guesses.")
+
     if is_good_score(number_of_guesses, high - low + 1):
         print("Good guessing!")
+
     choice = input("Do you want to save your score? (y/N) ")
     if choice.upper() == "Y":
         save_score(number_of_guesses, low, high)
@@ -66,6 +69,7 @@ def play(low, high):
 def set_limit(low):
     """Set high limit to new value from user input."""
     print("Set new limit")
+
     new_high = get_valid_number(f"Enter a new high value, above {low}: ")
     while new_high <= low:
         print("Higher!")
@@ -82,7 +86,7 @@ def get_valid_number(prompt):
             is_valid = True
         except ValueError:
             print("Invalid number")
-    return number
+    return number  # No problem with potential undefined
 
 
 def is_good_score(number_of_guesses, range_):
@@ -91,13 +95,15 @@ def is_good_score(number_of_guesses, range_):
         return True
 
 
-def high_scores():
-    """Determines highscores"""
+def display_high_scores():
+    """Display previous high scores"""
     scores = []
+
     with open("scores.txt") as in_file:
         for line in in_file:
             line = line.split("|")
             scores.append((int(line[0]), int(line[1])))
+
     scores.sort()
     for score in scores:
         marker = "!" if is_good_score(score[0], score[1]) else ""
