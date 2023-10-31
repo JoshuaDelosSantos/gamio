@@ -38,7 +38,7 @@ def main():
 
 def save_score(number_of_guesses, low, high, filename):
     """Save score to scores.txt with range"""
-    with open(filename, "a") as outfile:
+    with open(filename, "a", encoding="utf-8-sig") as outfile:
         print(f"{number_of_guesses}|{high - low + 1}", file=outfile)
 
 
@@ -99,7 +99,7 @@ def display_high_scores(filename):
     """Display previous high scores"""
     scores = []
 
-    with open(filename, 'r') as in_file:
+    with open(filename, 'r', encoding="utf-8-sig") as in_file:
         for line in in_file:
             line = line.split("|")
             scores.append((int(line[0]), int(line[1])))
