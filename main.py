@@ -8,6 +8,7 @@ import random
 
 DEFAULT_LOW = 1
 DEFAULT_HIGH = 10
+FILENAME = 'scores.txt'
 MENU = "(P)lay\n(S)et limit\n(H)igh scores\n(Q)uit: "
 
 
@@ -23,10 +24,11 @@ def main():
         if choice == "P":
             play(low, high)
             number_of_games += 1
+
         elif choice == "S":
             high = set_limit(low)
         elif choice == "H":
-            display_high_scores()
+            display_high_scores(FILENAME)
         else:
             print("Invalid choice")
         print(MENU)
@@ -34,9 +36,9 @@ def main():
     print(f"Thanks for playing ({number_of_games} times)!")
 
 
-def save_score(number_of_guesses, low, high):
+def save_score(number_of_guesses, low, high, filename):
     """Save score to scores.txt with range"""
-    with open("scores.txt", "a") as outfile:
+    with open(filename, "a") as outfile:
         print(f"{number_of_guesses}|{high - low + 1}", file=outfile)
 
 
@@ -60,7 +62,7 @@ def play(low, high):
 
     choice = input("Do you want to save your score? (y/N) ")
     if choice.upper() == "Y":
-        save_score(number_of_guesses, low, high)
+        save_score(number_of_guesses, low, high, FILENAME)
         return
     else:
         print("Fine then.")
@@ -95,11 +97,11 @@ def is_good_score(number_of_guesses, range_):
         return True
 
 
-def display_high_scores():
+def display_high_scores(filename):
     """Display previous high scores"""
     scores = []
 
-    with open("scores.txt") as in_file:
+    with open(filename, 'r') as in_file:
         for line in in_file:
             line = line.split("|")
             scores.append((int(line[0]), int(line[1])))
