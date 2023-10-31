@@ -53,7 +53,7 @@ def play(low, high):
             print("Lower")
         guess = int(input(f"Guess a number between {low} and {high}: "))
     print(f"You got it in {number_of_guesses} guesses.")
-    if good_score(number_of_guesses, high - low + 1):
+    if is_good_score(number_of_guesses, high - low + 1):
         print("Good guessing!")
     else:
         pass
@@ -76,6 +76,7 @@ def set_limit(low):
 
 
 def get_valid_number(prompt):
+    """Get a valid number"""
     is_valid = False
     while not is_valid:
         try:
@@ -86,12 +87,14 @@ def get_valid_number(prompt):
     return number
 
 
-def good_score(number_of_guesses, range_):
+def is_good_score(number_of_guesses, range_):
+    """Determine if score is good"""
     if number_of_guesses <= math.ceil(math.log2(range_)):
         return True
 
 
 def high_scores():
+    """Determines highscores"""
     scores = []
     with open("scores.txt") as in_file:
         for line in in_file:
@@ -99,7 +102,7 @@ def high_scores():
             scores.append((int(line[0]), int(line[1])))
     scores.sort()
     for score in scores:
-        marker = "!" if good_score(score[0], score[1]) else ""
+        marker = "!" if is_good_score(score[0], score[1]) else ""
         print(f"{score[0]} ({score[1]}) {marker}")
 
 
