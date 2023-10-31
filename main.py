@@ -8,6 +8,7 @@ import random
 
 DEFAULT_LOW = 1
 DEFAULT_HIGH = 10
+MENU = "(P)lay\n(S)et limit\n(H)igh scores\n(Q)uit: "
 
 
 def main():
@@ -16,7 +17,8 @@ def main():
     high = DEFAULT_HIGH
     number_of_games = 0
     print("Welcome to the guessing game")
-    choice = input("(P)lay, (S)et limit, (H)igh scores, (Q)uit: ").upper()
+    print(MENU)
+    choice = input(">>>").upper()
     while choice != "Q":
         if choice == "P":
             play(low, high)
@@ -27,7 +29,8 @@ def main():
             high_scores()
         else:
             print("Invalid choice")
-        choice = input("(P)lay, (S)et limit, (H)igh scores, (Q)uit: ").upper()
+        print(MENU)
+        choice = input(">>>").upper()
     print(f"Thanks for playing ({number_of_games} times)!")
 
 
