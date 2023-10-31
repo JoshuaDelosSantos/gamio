@@ -44,19 +44,17 @@ def play(low, high):
     """Play guessing game using current low and high values."""
     secret = random.randint(low, high)
     number_of_guesses = 1
-    guess = int(input(f"Guess a number between {low} and {high}: "))
+    guess = get_valid_number(f"Guess a number between {low} and {high}: ")
     while guess != secret:
         number_of_guesses += 1
         if guess < secret:
             print("Higher")
         else:
             print("Lower")
-        guess = int(input(f"Guess a number between {low} and {high}: "))
+        guess = get_valid_number(f"Guess a number between {low} and {high}: ")
     print(f"You got it in {number_of_guesses} guesses.")
     if is_good_score(number_of_guesses, high - low + 1):
         print("Good guessing!")
-    else:
-        pass
     choice = input("Do you want to save your score? (y/N) ")
     if choice.upper() == "Y":
         save_score(number_of_guesses, low, high)
